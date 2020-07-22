@@ -8,7 +8,7 @@ const base_url = "https://image.tmdb.org/t/p/original/";
 
 function Row({ title, fetchUrl, isLargeRow }) {
   const [movies, setMovies] = useState([]);
-  const [trailerUrl, setTrailerUrl] = useState([]);
+  const [trailerUrl, setTrailerUrl] = useState([""]);
 
   // a snippet of code which runs based on a specific condition
   useEffect(() => {
@@ -23,19 +23,19 @@ function Row({ title, fetchUrl, isLargeRow }) {
   }, [fetchUrl]);
 
   const opts = {
-    height: "390px",
+    height: "390",
     width: "100%",
     playerVars: {
       autoplay: 1
     }
   };
 
-  const handleClick = (movie) => {
+  const handleClick = movie => {
     if (trailerUrl) {
       setTrailerUrl("");
     } else {
-      movieTrailer(movie?.name || movie?.title || "")
-        .then((url) => {
+      movieTrailer(movie?.name || "")
+        .then(url => {
           const urlParams = new URLSearchParams(new URL(url).search);
           setTrailerUrl(urlParams.get("v"));
         })
@@ -60,7 +60,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
           />
         ))}
       </div>
-      {trailerUrl && <Youtube videoId={trailerUrl} opts={opts} />}
+      {/* {trailerUrl && <Youtube videoId={trailerUrl} opts={opts} />} */}
     </div>
   );
 }
